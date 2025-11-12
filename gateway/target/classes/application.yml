@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: patient-service
+          uri: http://patient-back:8081
+          predicates:
+            - Path=/patients/**
+
+     
+        - id: frontend
+          uri: http://frontend:8084
+          predicates:
+            - Path=/frontend/**
+          filters:
+            - StripPrefix=1
+
+        - id: doctor-notes
+          uri: http://doctor-notes:8080
+          predicates:
+            - Path=/notes/**
+
+        - id: diabetes-risk
+          uri: http://diabetes-risk:8085
+          predicates:
+            - Path=/risk/**
+
+
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG

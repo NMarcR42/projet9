@@ -1,0 +1,5 @@
+package com.openslaroom.patient.model;
+
+public class Patient {
+
+}

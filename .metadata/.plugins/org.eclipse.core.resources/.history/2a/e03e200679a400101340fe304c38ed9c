@@ -1,0 +1,5 @@
+package com.openslaroom.patient.repository;
+
+public interface PatientRepository {
+
+}

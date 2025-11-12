@@ -1,0 +1,80 @@
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_patient
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: patient
+    ports:
+      - "3308:3306" 
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+
+  patient-back:
+    build: ./patient-back
+    container_name: patient-back
+    expose:
+      - "8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/patient?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      - mysql
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    expose:
+      - "8084"
+    depends_on:
+      - gateway
+    environment:
+      - GATEWAY_URL=http://gateway:8080
+
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    ports:
+      - "27018:27017"  
+    volumes:
+      - mongo_data:/data/db
+
+  doctor-notes:
+    build: ./doctor-notes
+    container_name: doctor-notes
+    ports:
+      - "8083:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/doctor_notes_db
+    depends_on:
+      - mongo
+
+  gateway:
+      build: ./gateway
+      container_name: gateway
+      depends_on:
+        - patient-back
+      ports:
+        - "8082:8080"
+      environment:
+         PATIENT_SERVICE_URL: http://patient-back:8081
+
+  diabetes-risk:
+    build: ./diabetes-risk
+    container_name: diabetes-risk
+    ports:
+      - "8085:8085"
+    depends_on:
+      - gateway
+    environment:
+      - PATIENT_SERVICE_URL=http://gateway:8080/patients
+      - NOTES_SERVICE_URL=http://gateway:8080/notes
+
+
+volumes:
+  mysql_data:
+  mongo_data:

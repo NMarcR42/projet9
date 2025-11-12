@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des patients</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9fb;
+            color: #333;
+            margin: 40px;
+        }
+        h2 {
+            color: #0066cc;
+            border-bottom: 2px solid #0066cc;
+            padding-bottom: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        tr:hover {
+            background: #f1f7ff;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .add-btn {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-bottom: 15px;
+        }
+        .add-btn:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+<h2>Liste des patients</h2>
+<a class="add-btn" href="/frontend/patients/add">Ajouter un patient</a>
+
+<table>
+    <tr><th>Nom</th><th>Prénom</th><th>Actions</th></tr>
+    <tr th:each="patient : ${patients}">
+        <td th:text="${patient.nom}"></td>
+        <td th:text="${patient.prenom}"></td>
+        <td>
+            <a th:href="@{'/frontend/patients/' + ${patient.id}}">Voir</a>
+            <a th:href="@{'/frontend/patients/edit/' + ${patient.id}}">Modifier</a>
+            <a th:href="@{'/frontend/patients/delete/' + ${patient.id}}">Supprimer</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
