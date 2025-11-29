@@ -6,7 +6,7 @@ public class Note {
 
     private String id;
 
-    private String patientId;
+    private Long patientId;
 
     private String content;
 
@@ -24,16 +24,15 @@ public class Note {
     }
 
 
-    public String getPatientId() 
+    public Long getPatientId() 
     {
         return patientId;
     }
 
-    public void setPatientId(String patientId) 
+    public void setPatientId(Long patientId) 
     {
         this.patientId = patientId;
     }
-
 
     public String getContent() 
     {

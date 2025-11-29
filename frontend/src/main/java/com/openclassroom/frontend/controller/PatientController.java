@@ -75,7 +75,7 @@ public class PatientController {
     public String addNoteForPatient(@PathVariable Long id, @ModelAttribute("note") Note note) {
         note.setPatientId(String.valueOf(id));
         restTemplate.postForObject(gatewayUrl + "/notes", note, Note.class);
-        return "redirect:/patients/" + id;
+        return "redirect:http://localhost:8082/frontend/patients/" + id;
     }
 
     @GetMapping("/add")
@@ -93,18 +93,18 @@ public class PatientController {
     @PostMapping
     public String addPatient(@ModelAttribute Patient patient) {
         service.createPatient(patient);
-        return "redirect:/frontend/patients"; 
+        return "redirect:http://localhost:8082/frontend/patients"; 
     }
 
     @PostMapping("/update/{id}")
     public String updatePatient(@PathVariable Long id, @ModelAttribute Patient patient) {
         service.updatePatient(id, patient);
-        return "redirect:/frontend/patients"; 
+        return "redirect:http://localhost:8082/frontend/patients"; 
     }
 
     @GetMapping("/delete/{id}")
     public String deletePatient(@PathVariable Long id) {
         service.deletePatient(id);
-        return "redirect:/frontend/patients"; 
+        return "redirect:http://localhost:8082/frontend/patients"; 
     }
 }

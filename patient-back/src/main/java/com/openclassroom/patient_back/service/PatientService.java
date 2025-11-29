@@ -1,7 +1,7 @@
-package com.openslaroom.patient_back.service;
+package com.openclassroom.patient_back.service;
 
-import com.openslaroom.patient_back.model.Patient;
-import com.openslaroom.patient_back.repository.PatientRepository;
+import com.openclassroom.patient_back.model.Patient;
+import com.openclassroom.patient_back.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +13,11 @@ public class PatientService {
 
     @Autowired
     private PatientRepository repo;
+
+    @Autowired
+    public PatientService(PatientRepository repo) { 
+        this.repo = repo;
+    }
 
     public List<Patient> getAllPatients() {
         return repo.findAll();

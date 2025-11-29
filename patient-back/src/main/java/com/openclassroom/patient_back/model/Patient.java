@@ -1,4 +1,4 @@
-package com.openslaroom.patient_back.model;
+package com.openclassroom.patient_back.model;
 
 import jakarta.persistence.*;
 
