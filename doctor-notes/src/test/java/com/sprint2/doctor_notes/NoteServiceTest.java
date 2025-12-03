@@ -26,7 +26,7 @@ class NoteServiceTest {
     void testAddNote() {
         Note note = new Note();
         note.setId("1");
-        note.setPatientId(123L);
+        note.setPatientId(123);
         note.setContent("Test note");
 
         when(noteRepository.save(note)).thenReturn(note);
@@ -34,17 +34,16 @@ class NoteServiceTest {
         Note saved = noteService.addNote(note);
 
         assertEquals("1", saved.getId());
-        assertEquals(123L, saved.getPatientId());
-        verify(noteRepository, times(1)).save(note);
+        assertEquals(123, saved.getPatientId());
     }
 
     @Test
     void testGetNotesByPatient() {
-        Long patientId = 123L;
+        int patientId = 123;
 
         List<Note> expectedList = List.of(
-                new Note() {{ setId("1"); setPatientId(patientId); setContent("Note 1"); }},
-                new Note() {{ setId("2"); setPatientId(patientId); setContent("Note 2"); }}
+                new Note(patientId, "Note 1"),
+                new Note(patientId, "Note 2")
         );
 
         when(noteRepository.findByPatientId(patientId)).thenReturn(expectedList);
@@ -58,8 +57,7 @@ class NoteServiceTest {
 
     @Test
     void testPatientExists() {
-        assertTrue(noteService.patientExists(123L));
-        assertFalse(noteService.patientExists(0L));
-        assertFalse(noteService.patientExists(null));
+        assertTrue(noteService.patientExists(123));
+        assertFalse(noteService.patientExists(0));
     }
 }

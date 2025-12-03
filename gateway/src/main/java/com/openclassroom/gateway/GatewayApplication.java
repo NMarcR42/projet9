@@ -1,4 +1,4 @@
-package com.openslaroom.gateway;
+package com.openclassroom.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

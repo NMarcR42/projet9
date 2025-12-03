@@ -1,17 +1,25 @@
 package com.sprint2.doctor_notes.model;
-
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.Arrays;
 
+@Document(collection = "notes")
 public class Note {
-
+    @Id
     private String id;
-
-    private Long patientId;
-
+    @Field("patId")
+    private int patientId;
+    @Field("note")
     private String content;
 
     private String date;
 
+    public Note() {}
+    public Note(int patientId, String content) {
+        this.patientId = patientId;
+        this.content = content;
+    }
 
     public String getId() 
     {
@@ -24,12 +32,12 @@ public class Note {
     }
 
 
-    public Long getPatientId() 
+    public int getPatientId() 
     {
         return patientId;
     }
 
-    public void setPatientId(Long patientId) 
+    public void setPatientId(int patientId) 
     {
         this.patientId = patientId;
     }

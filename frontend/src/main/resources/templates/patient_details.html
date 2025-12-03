@@ -77,8 +77,8 @@
     <p th:if="${notes == null or notes.isEmpty()}">Aucune note disponible.</p>
 
     <div class="actions">
-        <a th:href="@{'/frontend/patients/' + ${patient.id} + '/notes/add'}" class="button">Ajouter une note</a>
-        <a th:href="@{'/frontend/patients'}" class="button">Retour</a>
+        <a th:href="@{/patients/{id}/notes/add(id=${patient.id})}" class="button">Ajouter une note</a>
+        <a th:href="@{/patients}" class="button">Retour</a> 
     </div>
 
     <hr>

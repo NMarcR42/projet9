@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  main:
+    web-application-type: reactive
   application:
     name: gateway
 
@@ -12,26 +14,20 @@ spring:
           uri: http://patient-back:8081
           predicates:
             - Path=/patients/**
-
-     
         - id: frontend
           uri: http://frontend:8084
           predicates:
             - Path=/frontend/**
           filters:
             - StripPrefix=1
-
         - id: doctor-notes
           uri: http://doctor-notes:8080
           predicates:
             - Path=/notes/**
-
         - id: diabetes-risk
           uri: http://diabetes-risk:8085
           predicates:
             - Path=/risk/**
-
-
 
 logging:
   level:

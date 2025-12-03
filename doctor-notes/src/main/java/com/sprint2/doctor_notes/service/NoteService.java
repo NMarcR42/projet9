@@ -11,22 +11,20 @@ public class NoteService {
 
     private final NoteRepository noteRepository;
 
-    public NoteService(NoteRepository noteRepository)
-    {
+    public NoteService(NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
     }
 
-    public Note addNote(Note note)
-    {
+    public Note addNote(Note note) {
         return noteRepository.save(note);
     }
 
-    public List<Note> getNotesByPatient(Long patientId)
-    {
+    public List<Note> getNotesByPatient(int patientId) {
         return noteRepository.findByPatientId(patientId);
     }
 
-    public boolean patientExists(Long patientId) {
-        return patientId != null && patientId > 0;
+    public boolean patientExists(int patientId) {
+
+        return patientId > 0;
     }
 }

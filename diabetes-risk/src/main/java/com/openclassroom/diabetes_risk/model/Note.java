@@ -4,22 +4,23 @@ import lombok.Data;
 
 @Data
 public class Note {
-    private String patientId;
-    private String patient;
+    private int patientId;
     private String content;
 
-    public String getPatientId() { 
+    public Note() {}
+
+    public Note(int patientId, String content) {
+        this.patientId = patientId;
+        this.content = content;
+    }
+    
+    public int getPatientId() { 
         return patientId; 
     }
-    public void setPatientId(String patientId) { 
+    public void setPatientId(int patientId) { 
         this.patientId = patientId; 
     }
-    public String getPatient() { 
-        return patient; 
-    }
-    public void setPatient(String patient) { 
-        this.patient = patient; 
-    }
+
     public String getContent() { 
         return content; 
     }

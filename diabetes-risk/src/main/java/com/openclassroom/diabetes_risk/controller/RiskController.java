@@ -13,7 +13,7 @@ public class RiskController {
     private final RiskService riskService;
 
     @GetMapping("/{patientId}")
-    public RiskReport getRisk(@PathVariable Integer patientId) {
+    public RiskReport getRisk(@PathVariable String patientId) {
         return riskService.assessRisk(patientId);
     }
 

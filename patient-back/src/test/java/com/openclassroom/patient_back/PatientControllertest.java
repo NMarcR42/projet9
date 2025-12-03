@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -33,7 +32,6 @@ class PatientControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    @WithMockUser(username = "doctor", roles = {"DOCTOR"})
     void testGetAllPatients() throws Exception {
         Patient p1 = new Patient(); p1.setId(1L); p1.setNom("John");
         Patient p2 = new Patient(); p2.setId(2L); p2.setNom("Jane");
@@ -45,8 +43,8 @@ class PatientControllerTest {
                 .andExpect(jsonPath("$", org.hamcrest.Matchers.hasSize(2)));
     }
 
+
     @Test
-    @WithMockUser(username = "doctor", roles = {"DOCTOR"})
     void testGetPatientByIdFound() throws Exception {
         Patient p = new Patient(); p.setId(1L); p.setNom("John");
         when(patientService.getPatientById(1L)).thenReturn(Optional.of(p));
@@ -57,7 +55,6 @@ class PatientControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "doctor", roles = {"DOCTOR"})
     void testCreatePatient() throws Exception {
         PatientDTO dto = new PatientDTO();
         dto.setNom("NewPatient");

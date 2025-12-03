@@ -1,0 +1,36 @@
+package com.openclassroom.gateway.security;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.config.Customizer;
+
+
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+        http
+            .csrf(csrf -> csrf.disable())
+            .authorizeExchange(exchanges -> exchanges
+                .pathMatchers("/patients/**", "/risk/**").authenticated()
+                .anyExchange().permitAll()
+            )
+            .httpBasic(Customizer.withDefaults())
+            .formLogin(form -> form.disable());    
+        return http.build();
+    }
+
+    @Bean
+    public MapReactiveUserDetailsService userDetailsService() {
+        var user = User.withUsername("doctor")
+                .password("{noop}password")
+                .roles("DOCTOR")
+                .build();
+        return new MapReactiveUserDetailsService(user);
+    }
+}
